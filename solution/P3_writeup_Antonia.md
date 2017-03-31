@@ -13,10 +13,10 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-
+[image4]: ./docu/model.png "Model"
 [image5]: ./docu/model_summary.png "Model summary"
 [image6]: ./docu/data_distribution.png "Data distribution"
-[image7]: https://rawgit.com/AntoniaSophia/Behavioral-Cloning_Project3/master/solution/docu/Behavioral_Cloning.html "Notebook"
+
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -27,10 +27,11 @@ The goals / steps of this project are the following:
 * link to model.py [Model File](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model.py)
 * link to drive.py [Drive Control](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/drive.py)  
 * link to network model.h5 [Network file](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model.h5)
-* link to the video of the first track video1.mp4 [Video Track 1](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/videos_track1.mp4)
-* link to the video of the first track video2.mp4 [Video Track 2](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/videos_track2.mp4)
-* link to the video of the first track video1.mp4 [Video Track 1 HD](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/Videos%20Track1%20Fullhd-1.m4v)
-* link to the video of the first track video2.mp4 [Video Track 2 HD](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/Videos%20Track2%20Fullhd-1.m4v)
+* link to the best initial model (see also "Solution Design approach")[TOP initial model](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model_TOP_FOR_RETRAIN.h5)
+* link to the video of the first track videos_track1.mp4 [Video Track 1](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/videos_track1.mp4)
+* link to the video of the first track videos_track1.mp4 [Video Track 2](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/videos_track2.mp4)
+* link to the HD video of the first track 'Videos Track1 Fullhd-1.m4v' [Video Track 1 HD](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/Videos%20Track1%20Fullhd-1.m4v)
+* link to the HD video of the first track 'Videos Track2 Fullhd-1.m4v' [Video Track 2 HD](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/Videos%20Track2%20Fullhd-1.m4v)
 
 
 ####1. Submission includes all required files and can be used to run the simulator in autonomous mode
@@ -40,8 +41,8 @@ My project includes the following files:
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
 * P3_writeup_Antonia.md (this file) summarizing the results
-* Video1.mp4 which shows the car driving autonomously on the first track
-* Video2.mp4 which shows the car driving autonomously on the second track
+* videos_track1.mp4 which shows the car driving autonomously on the first track
+* videos_track2.mp4 which shows the car driving autonomously on the second track
 
 
 ####2. Submission includes functional code
@@ -59,27 +60,36 @@ The model.py file contains the code for training and saving the convolution neur
 
 ####1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+My model consists of a convolution neural network with 3x3 filter sizes and depths between 24 and 64 (model.py lines 201-208) 
+The model includes RELU layers to introduce nonlinearity (code lines 201, 203, 205), and the data is normalized in the model using a Keras lambda layer (code line 198). 
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+Actually is it the standard NVidia network which was shown during the Udacity lessons. 
 
 ####2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model contains dropout layers in order to reduce overfitting (model.py lines 202, 204, 206). 
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+Other approaches to avoid overfitting are:
+- training data of the tracks clockwise and anti-clockwise 
+- limited epochs (maximum 3-4)
+- 20% validation data (see model.py line 185)
+
+The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 189-190). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 ####3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer with standard parameters, so the learning rate was not tuned manually (see model.py line 220).
+I didn't experience at all with different networks or modifying the NVidia network. I adjusted parameters like:
+- number of epochs
+- rates of augmented data
+- dropout layers (where and which dropout rate)
+- color spaces (at the RGB worked best for me)
 
 ####4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road and clockwise/anticlockwise driving direction. Also certain curves of the second track have been recorded 3-4 times seperately in order to get this tricky curves trained sufficiently
 
 For details about how I created the training data, see the next section. 
-
-
 
 
 
@@ -88,46 +98,40 @@ For details about how I created the training data, see the next section.
 
 ####1. Solution Design Approach
 
+I used a 2 level approach:
+- first try to find a model with limited data which is able to detect lanes and lane markings correctly ("initial model")
+- secondly I trained this model using heavy random shadowing and translation, but kept the convolutional layers which already have proven to be able to have understood how to drive 
 
-overfitting
-- dropout
-- clockwise and anti-clockwise 
-- limited epochs (maximum 5)
-- 20% validation data
+So actually the first model identified edges, lane markings, obstacles, curves and knows that it shall keep in the middle of the road.
+This knowledge is stored in the weights of the convolutional layers of this initial layer and thus it works perfectly fine to cut only the last non-convolutional layers and train them to identify shadows and other random noise (e.g. translation)
+Actually I'm not sure whether this understanding is really correct or not - but it seemed to work...
 
-How was trained?
+Find the "initial model" at [Best Initial Model](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model_TOP_FOR_RETRAIN.h5)
 
-dropout does not really work everywhere - after flattening and Dense(100) it works best (most parameters in the model)
-RGB space works best for me - also tried out other color spaces
+This initial model had a low mean squared error both on the training set and on the validation set. This implied that the model was not overfitting. 
 
+The initial model contains dropout layers in order to reduce overfitting (model.py lines 202, 204, 206), the retraining model also contained a dropout layer of flattening of the model (see model.py line 264). 
 
+Other approaches to avoid overfitting are:
+- training data of the tracks clockwise and anti-clockwise 
+- limited epochs (maximum 3-4)
+- separate 20% of the validation data (see model.py line 185)
 
-2 level
-- first try to find a model with limited data which is able to detect lanes and lane markings correctly
-- train this model using random shadowing and translation
-
-
-The overall strategy for deriving a model architecture was to ...
-
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
-
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
-
-To combat the overfitting, I modified the model so that ...
-
-Then I ... 
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+The final step was to run the simulator to see how well the car was driving around track one. This already worked out pretty well with the initial model. There were a few spots where the vehicle fell off the track in the second track. In order to improve the driving behavior in these cases, I just recorded additional training data containing only those parts and repeating this 3-4 times.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+I simply chose the original NVidia network without any change. However I added some dropout layers in the convolutional part and one dropout after flattening. All in all I experienced that using dropouts was a real nightmare: I found out that it makes only sense in case you have many weights involved, otherwise the network get unstable were quickly. Ok, this is more or less clear! On the other hand I also experienced that the border between "stable driving behavior" and "vehicles misses a curve" is extremely narrow. At the end the dropout rates which worked best were between 0.05 and 0.15 only. Shouldn't dropouts have better effects!?
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
+Also the retraining model is identical, only difference is that the dropout layers of the initial model have been removed of course. This is kind of Frankenstein code starting from line 322...
 
-![alt text][image1]
+The model architecture (see model.py lines 196-217) consisted of a convolution neural network with the following layers and layer sizes:
+![Model as a table][image5]
+
+Here is a simple graphical visualization of the architecture:
+![Model as a small graph][image4]
 
 ####3. Creation of the Training Set & Training Process
 
@@ -181,5 +185,8 @@ Again I really learned a lot of things, but on the other hand I feel that even m
 - why are some attempts crazy and some others pretty good
 - there seems to be so much of random inside the approach
 - accuracy has nearly no meaning, rather the opposite: networks with the smallest loss had the worst results according to my observation
+- using dropouts was a real nightmare: I found out that it makes only sense in case you have many weights involved, otherwise the network get unstable were quickly. On the other hand I also experienced that the border between "stable driving behavior" and "vehicles misses a curve" is extremely narrow. At the end the dropout rates which worked best were between 0.05 and 0.15 only. Shouldn't dropouts have better effects!?
+- are there any kind of best practices on how to get to good models in a systematic way? At least for me it was a high amount of try&error
 
+It was really great fun to work on this project!!
 

@@ -199,9 +199,9 @@ model.add(Lambda(lambda x: x/255 - .5, input_shape=(row, col , ch)))
 model.add(Cropping2D(cropping=((70,25),(0,0))))
 
 model.add(Convolution2D(24,5,5,subsample=(2,2),activation="relu"))
-#model.add(Dropout(0.1))
+model.add(Dropout(0.1))
 model.add(Convolution2D(36,5,5,subsample=(2,2),activation="relu"))
-#model.add(Dropout(0.1))
+model.add(Dropout(0.1))
 model.add(Convolution2D(48,5,5,subsample=(2,2),activation="relu"))
 model.add(Dropout(0.1))
 model.add(Convolution2D(64,3,3,activation="relu"))
@@ -269,7 +269,7 @@ if retrain == True:
 	model.add(BatchNormalization())
 	model.add(Dense(1))
 
-	model.load_weights('model_TOP.h5')
+	model.load_weights('model_TOP_FOR_RETRAIN.h5')
 
 	for layer in model.layers:
 		layer.trainable = False
