@@ -1,4 +1,4 @@
-#***Behavioral Cloning***
+#**Behavioral Cloning**
 
 
 **Behavioral Cloning Project**
@@ -18,7 +18,7 @@ The goals / steps of this project are the following:
 [image3]: ./examples/placeholder_small.png "Recovery Image"
 [image4]: ./examples/placeholder_small.png "Recovery Image"
 [image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
+[image6]: ./docu/data_distribution.png "Data distribution"
 [image7]: ./docu/Behavioral_Cloning.html "Notebook"
 
 ## Rubric Points
@@ -32,7 +32,7 @@ The goals / steps of this project are the following:
 * link to network model.h5 [Network file](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model.h5)
 * link to the video of the first track video1.mp4 [Video Track 1](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/video1.mp4)
 * link to the video of the first track video2.mp4 [Video Track 2](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/video2.mp4)
-* link to the video of the first track video3.mp4 [Video Track 3](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/video3.mp4)
+
 
 ####1. Submission includes all required files and can be used to run the simulator in autonomous mode
 
@@ -43,42 +43,13 @@ My project includes the following files:
 * P3_writeup_Antonia.md (this file) summarizing the results
 * Video1.mp4 which shows the car driving autonomously on the first track
 * Video2.mp4 which shows the car driving autonomously on the second track
-* Video3.mp4 which shows the car driving autonomously on the third track
+
 
 ####2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
 ```sh
 python drive.py model.h5
 ```
-
-
-dropout does not really work everywhere - after flattening and Dense(100) it works best (most parameters in the model)
-training data is not really good - I'm not an expert in gaming...
-RGB space works best for me - also tried out other color spaces
-
-random show works well
-translation also works well
-
-
-
-overfitting
-- dropout
-- clockwise and anti-clockwise 
-- limited epochs (maximum 5)
-- 20% validation data
-
-How was trained?
-
-Training data from both tracks have been taken.
-- 3 tracks original direction
-- 1 track other direction
-- training of recovery (how to get back to center) - unfortunately I recognized that I also recorded the phase where I drove towards the hard shoulder also which is a silly mistake of course...
-- in the second track 3 curves got a special treatment as I recorded them a couple of times as they made trouble
-
-
-2 level
-- first try to find a model with limited data which is able to detect lanes and lane markings correctly
-- train this model using random shadowing and translation
 
 
 ####3. Submission code is usable and readable
@@ -109,9 +80,33 @@ Training data was chosen to keep the vehicle driving on the road. I used a combi
 
 For details about how I created the training data, see the next section. 
 
+
+
+
+
+
 ###Model Architecture and Training Strategy
 
 ####1. Solution Design Approach
+
+
+overfitting
+- dropout
+- clockwise and anti-clockwise 
+- limited epochs (maximum 5)
+- 20% validation data
+
+How was trained?
+
+dropout does not really work everywhere - after flattening and Dense(100) it works best (most parameters in the model)
+RGB space works best for me - also tried out other color spaces
+
+
+
+2 level
+- first try to find a model with limited data which is able to detect lanes and lane markings correctly
+- train this model using random shadowing and translation
+
 
 The overall strategy for deriving a model architecture was to ...
 
@@ -137,32 +132,55 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 
 ####3. Creation of the Training Set & Training Process
 
-To capture good driving behavior:
-- I first recorded two laps on track one using center lane driving 
-- 
+Training data from both tracks have been taken. In order capture good driving behavior I took:
+- 3 tracks in the original direction
+- 2 track in the other direction
+- training of recovery (how to get back to center) --> unfortunately I recognized that I also recorded the phase where I drove towards the hard shoulder also which is a silly mistake of course...
+- in the second track 3 curves got a special treatment as I recorded them a couple of times as they made trouble
+- as additional data source I used the Udacity data 
 
-The following HTML file shows exploration of the test data including center pictures, flipped pictured, shadowed pictures and the distribution of the angles among the whole test set
+At the end I had around 33000 images in total. 
 
-![alt text][image7]
+The following HTML file shows exploration of the test data including center pictures, flipped pictured, shadowed pictures and the distribution of the angles among the whole test set.
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+![Exploration of test data][image7]
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
-
-Then I repeated this process on track two in order to get more data points.
-
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+The following image shows the distribtion of the angles of the test data:
+![data distribution][image6]
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+I used the following techniques in order to augment the test data (see the function image_pipeline in line 101):
+- random show works well
+- translation also works well
+- left camera + right camera plus correction factor
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+What didn't work at all:
+- chosing a different color space than RBG
+- darkening the whole image (not only random shadowing)
+- creation of too much augmented data also lead to worse results from a certain ratio (maximum 1:2 between real data:augmented data )
+
+
+General remark:
+From my point of view the training data is not really good - I'm not an expert in gaming so I had a tough time driving around escpecially the second track. I was often to harsh in the angle and sometimes I just drove like a drunken pingiun.
+
+
+Finally I randomly shuffled the data set and put 20% of the data into a validation set. 
+
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 3. The reason is simply heuristic: more epochs didn't produce better results and made the difference between training loss and validation even bigger which is and indicator for overfitting. With 3 epochs both values have been pretty close.
+I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+Actually I'm really surprised that the absolute accuracy value doesn't allow a prediction whether the model is good or bad!
+
+
+####4. Let's give an overall feedback
+Thank god I'm done with it.... ;-)
+
+Definitely it was a lot of fun working on that stuff and I'm really proud to succeed in the second track also!!
+
+Again I really learned a lot of things, but on the other hand I feel that even more questions arise after this project:
+- how can a neural network be validated? My only criteria was that I tried to observe if the network has understood the rules of center driving
+- why are some attempts crazy and some others pretty good
+- there seems to be so much of random inside the approach
+- accuracy has nearly no meaning, rather the opposite: networks with the smallest loss had the worst results according to my observation
+
+
