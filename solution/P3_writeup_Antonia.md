@@ -142,7 +142,7 @@ At the end I had around 33000 images in total.
 
 The following HTML file shows exploration of the test data including center pictures, flipped pictured, shadowed pictures and the distribution of the angles among the whole test set.
 
-![Exploration of test data][image7]
+[Exploration of test data](https://rawgit.com/AntoniaSophia/Behavioral-Cloning_Project3/master/solution/docu/Behavioral_Cloning.html)
 
 The following image shows the distribtion of the angles of the test data:
 ![data distribution][image6]
