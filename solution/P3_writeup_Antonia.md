@@ -32,7 +32,7 @@ The goals / steps of this project are the following:
 * link to the video of the first track videos_track1.mp4 [Video Track 2](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/videos_track2.mp4)
 * link to the HD video of the first track 'Videos Track1 Fullhd-1.m4v' [Video Track 1 HD](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/Videos%20Track1%20Fullhd-1.m4v)
 * link to the HD video of the first track 'Videos Track2 Fullhd-1.m4v' [Video Track 2 HD](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/Videos%20Track2%20Fullhd-1.m4v)
-
+* link to the exploration of the training data and network [Exploration of test data](https://rawgit.com/AntoniaSophia/Behavioral-Cloning_Project3/master/solution/docu/Behavioral_Cloning.html)
 
 ####1. Submission includes all required files and can be used to run the simulator in autonomous mode
 
