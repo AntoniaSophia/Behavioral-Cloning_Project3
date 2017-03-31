@@ -185,10 +185,10 @@ Definitely it was a lot of fun working on that stuff and I'm really proud to suc
 
 Again I really learned a lot of things, but on the other hand I feel that even more questions arise after this project:
 - how can a neural network be validated? My only criteria was that I tried to observe if the network has understood the rules of center driving
-- why are some attempts crazy and some others pretty good
-- there seems to be so much of random inside the approach
-- accuracy has nearly no meaning, rather the opposite: networks with the smallest loss had the worst results according to my observation
-- using dropouts was a real nightmare: I found out that it makes only sense in case you have many weights involved, otherwise the network get unstable were quickly. On the other hand I also experienced that the border between "stable driving behavior" and "vehicles misses a curve" is extremely narrow. At the end the dropout rates which worked best were between 0.05 and 0.15 only. Shouldn't dropouts have better effects!?
+- why are some attempts crazy and some others pretty good?
+- there seems to be so much of random inside the approach, is it just because I'm a beginner or is this normal?
+- accuracy has nearly no meaning, rather the opposite: networks with the smallest loss had the worst results according to my observation - really!?
+- using dropouts was a real nightmare: I found out that it makes only sense in case you have many weights involved, otherwise the network get unstable were quickly. On the other hand I also experienced that the border between "stable driving behavior" and "vehicles misses a curve" is extremely narrow. At the end the dropout rates which worked best were between 0.05 and 0.15 only. Shouldn't dropouts have better effects?
 - are there any kind of best practices on how to get to good models in a systematic way? At least for me it was a high amount of try&error
 
 It was really great fun to work on this project!!
