@@ -13,13 +13,10 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
+
+[image5]: ./docu/model_summary.png "Model summary"
 [image6]: ./docu/data_distribution.png "Data distribution"
-[image7]: ./docu/Behavioral_Cloning.html "Notebook"
+[image7]: https://rawgit.com/AntoniaSophia/Behavioral-Cloning_Project3/master/solution/docu/Behavioral_Cloning.html "Notebook"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -30,8 +27,10 @@ The goals / steps of this project are the following:
 * link to model.py [Model File](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model.py)
 * link to drive.py [Drive Control](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/drive.py)  
 * link to network model.h5 [Network file](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model.h5)
-* link to the video of the first track video1.mp4 [Video Track 1](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/video1.mp4)
-* link to the video of the first track video2.mp4 [Video Track 2](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/video2.mp4)
+* link to the video of the first track video1.mp4 [Video Track 1](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/videos_track1.mp4)
+* link to the video of the first track video2.mp4 [Video Track 2](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/videos_track2.mp4)
+* link to the video of the first track video1.mp4 [Video Track 1 HD](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/Videos%20Track1%20Fullhd-1.m4v)
+* link to the video of the first track video2.mp4 [Video Track 2 HD](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/Videos%20Track2%20Fullhd-1.m4v)
 
 
 ####1. Submission includes all required files and can be used to run the simulator in autonomous mode
