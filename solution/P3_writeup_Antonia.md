@@ -26,8 +26,8 @@ The goals / steps of this project are the following:
 
 * link to model.py [Model File](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model.py)
 * link to drive.py [Drive Control](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/drive.py)  
-* link to network model.h5 [Network file](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model.h5)
-* link to the best initial model (see also "Solution Design approach")[TOP initial model](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model_TOP_FOR_RETRAIN.h5)
+* link to final network model.h5 [Network file](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model.h5)
+* link to the best initial model (see also "Solution Design approach") [TOP initial model](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model_TOP_FOR_RETRAIN.h5)
 * link to the video of the first track videos_track1.mp4 [Video Track 1](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/videos_track1.mp4)
 * link to the video of the first track videos_track1.mp4 [Video Track 2](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/videos_track2.mp4)
 * link to the HD video of the first track 'Videos Track1 Fullhd-1.m4v' [Video Track 1 HD](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/videos/Videos%20Track1%20Fullhd-1.m4v)
@@ -98,13 +98,13 @@ For details about how I created the training data, see the next section.
 
 ####1. Solution Design Approach
 
-I used a 2 level approach:
+I used a 2-level approach:
 - first try to find a model with limited data which is able to detect lanes and lane markings correctly ("initial model")
 - secondly I trained this model using heavy random shadowing and translation, but kept the convolutional layers which already have proven to be able to have understood how to drive 
 
 So actually the first model identified edges, lane markings, obstacles, curves and knows that it shall keep in the middle of the road.
 This knowledge is stored in the weights of the convolutional layers of this initial layer and thus it works perfectly fine to cut only the last non-convolutional layers and train them to identify shadows and other random noise (e.g. translation)
-Actually I'm not sure whether this understanding is really correct or not - but it seemed to work...
+Actually I hope this understanding is really correct - but it seemed to work... ;-)
 
 Find the "initial model" at [Best Initial Model](https://github.com/AntoniaSophia/Behavioral-Cloning_Project3/blob/master/solution/model_TOP_FOR_RETRAIN.h5)
 
@@ -131,11 +131,13 @@ The model architecture (see model.py lines 196-217) consisted of a convolution n
 ![Model as a table][image5]
 
 Here is a simple graphical visualization of the architecture:
+
+
 ![Model as a small graph][image4]
 
 ####3. Creation of the Training Set & Training Process
 
-Training data from both tracks have been taken. In order capture good driving behavior I took:
+Training data from both tracks have been taken. In order to capture good driving behavior I took:
 - 3 tracks in the original direction
 - 2 track in the other direction
 - training of recovery (how to get back to center) --> unfortunately I recognized that I also recorded the phase where I drove towards the hard shoulder also which is a silly mistake of course...
@@ -176,6 +178,7 @@ Actually I'm really surprised that the absolute accuracy value doesn't allow a p
 
 
 ####4. Let's give an overall feedback
+
 Thank god I'm done with it.... ;-)
 
 Definitely it was a lot of fun working on that stuff and I'm really proud to succeed in the second track also!!
