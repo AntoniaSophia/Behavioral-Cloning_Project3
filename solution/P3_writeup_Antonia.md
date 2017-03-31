@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 [image4]: ./examples/placeholder_small.png "Recovery Image"
 [image5]: ./examples/placeholder_small.png "Recovery Image"
 [image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: Behavioral_Cloning.html "Notebook"
+[image7]: ./docu/Behavioral_Cloning.html "Notebook"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -137,8 +137,11 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 
 ####3. Creation of the Training Set & Training Process
 
-To capture good driving behavior I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior:
+- I first recorded two laps on track one using center lane driving 
+- 
 
+The following HTML file shows exploration of the test data including center pictures, flipped pictured, shadowed pictures and the distribution of the angles among the whole test set
 
 ![alt text][image7]
 
